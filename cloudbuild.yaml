@@ -7,16 +7,13 @@ steps:
         "-H",
         "Content-type: application/json",
         "--data",
-        '{"text":"`vmbackup-sidecar:$_TAG-$SHORT_SHA` build started!"}',
+        '{"text":"`vmbackup-sidecar:latest` build started!"}',
         "${_WEBHOOK_URL}",
       ]
   - name: "gcr.io/cloud-builders/docker"
     entrypoint: sh
     args:
-      [
-        "-c",
-        "docker build -t eu.gcr.io/$PROJECT_ID/vmbackup-sidecar:$(date -u +$_TAG-$SHORT_SHA-%Y%m%d%H%M%S) .",
-      ]
+      ["-c", "docker build -t eu.gcr.io/$PROJECT_ID/vmbackup-sidecar:latest"]
   - name: "gcr.io/cloud-builders/curl"
     args:
       [
@@ -25,10 +22,8 @@ steps:
         "-H",
         "Content-type: application/json",
         "--data",
-        '{"text":"`vmbackup-sidecar:$_TAG-$SHORT_SHA` build completed!"}',
+        '{"text":"`vmbackup-sidecar:latest` build completed!"}',
         "${_WEBHOOK_URL}",
       ]
-substitutions:
-  _TAG: $TAG_NAME
 images:
   - "eu.gcr.io/$PROJECT_ID/vmbackup-sidecar"
