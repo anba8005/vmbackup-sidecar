@@ -1,4 +1,4 @@
-FROM victoriametrics/vmbackup:v1.68.0 AS vmbackup
+FROM victoriametrics/vmbackup:stable AS vmbackup
 
 RUN apk add --no-cache curl jq
 
